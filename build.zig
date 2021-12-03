@@ -1,8 +1,9 @@
 const std = @import("std");
 
-const current_day = 2;
+const current_day = 3;
 pub fn build(b: *std.build.Builder) !void {
     const mode = b.standardReleaseOptions();
+    const test_step = b.step("test", "Run tests");
     var i: usize = 0;
     while (i < current_day) : (i += 1) {
         const name = try std.fmt.allocPrint(b.allocator, "{:0>2}", .{i + 1});
@@ -14,5 +15,9 @@ pub fn build(b: *std.build.Builder) !void {
         const exe = b.addExecutable(name, path);
         exe.setBuildMode(mode);
         exe.install();
+
+        const tests = b.addTest(path);
+        tests.setBuildMode(mode);
+        test_step.dependOn(&tests.step);
     }
 }
