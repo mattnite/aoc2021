@@ -1,6 +1,6 @@
 const std = @import("std");
 
-const current_day = 6;
+const current_day = 7;
 pub fn build(b: *std.build.Builder) !void {
     const mode = b.standardReleaseOptions();
     const test_step = b.step("test", "Run tests");
